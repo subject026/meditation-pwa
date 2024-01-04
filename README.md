@@ -1,27 +1,32 @@
-# React + TypeScript + Vite
+# Meditation PWA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+the plan so far
 
-Currently, two official plugins are available:
+    - on init
+      - get saved settings
+      - show settings UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    - user can:
+      -> choose session duration
+      -> choose background sound
+      -> choose ending bell
+      -> start session
 
-## Expanding the ESLint configuration
+    - on start session
+      - start timer
+      - start sound loop
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+    - user can:
+      -> pause
 
-- Configure the top-level `parserOptions` property like this:
+    - on pause
+      - stop audio
+      - pause timer
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+      - user can:
+        -> resume session
+        -> discard session
+        -> complete session
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+    - time reaches end
+    - play ending bell/gong
