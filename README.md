@@ -1,6 +1,6 @@
 # Meditation PWA
 
-the plan so far
+2 views: new/running session + session history
 
     - on init
       - get saved settings
@@ -30,3 +30,4 @@ the plan so far
 
     - time reaches end
     - play ending bell/gong
+    - save/discard session buttons
