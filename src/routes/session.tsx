@@ -13,11 +13,17 @@ export function Session() {
     async function fetchAudio() {
       const audioContext = getAudioContext();
       if (!audioContext) return;
-      const arrayBuffer = await fetch("/forest-rain.mp3").then((res) =>
+      const arrayBuffer = await fetch("/audio/forest-rain.mp3").then((res) =>
         res.arrayBuffer()
       );
-      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-      setAudioBuffer(audioBuffer);
+      audioContext
+        .decodeAudioData(arrayBuffer)
+        .then((audioBuffer) => {
+          setAudioBuffer(audioBuffer);
+        })
+        .catch((err): void => {
+          console.log({ err });
+        });
     }
     fetchAudio();
   }, []);
