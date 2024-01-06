@@ -2,8 +2,6 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
-// import basicSsl from "@vitejs/plugin-basic-ssl";
-// import mkcert from "vite-plugin-mkcert";
 
 export default defineConfig({
   plugins: [
@@ -18,7 +16,7 @@ export default defineConfig({
         description: "Track your meditation practice",
         theme_color: "#38a9ff",
         display: "standalone",
-        start_url: "/",
+        start_url: "/?fullscreen=true",
         icons: [
           {
             src: "/android-chrome-192x192.png",
@@ -42,7 +40,6 @@ export default defineConfig({
   ],
   server: {
     port: 7777,
-    // https: true,
   },
   resolve: {
     alias: {
