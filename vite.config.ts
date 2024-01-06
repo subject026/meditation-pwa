@@ -15,7 +15,7 @@ export default defineConfig({
         short_name: "CalmCache",
         description: "Track your meditation practice",
         theme_color: "#38a9ff",
-        display: "standalone",
+        display: "fullscreen",
         start_url: "/?fullscreen=true",
         icons: [
           {
