@@ -17,6 +17,8 @@ export default defineConfig({
         short_name: "CalmCache",
         description: "Track your meditation practice",
         theme_color: "#38a9ff",
+        display: "standalone",
+        start_url: "/",
         icons: [
           {
             src: "/android-chrome-192x192.png",
