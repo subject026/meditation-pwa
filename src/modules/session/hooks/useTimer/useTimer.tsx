@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 
 export type TTimerStatus = "INIT" | "RUNNING" | "STOPPED";
 
+const initialTickTime = Date.now();
+
 export function useTimer() {
   const [timerStatus, setTimerStatus] = useState<TTimerStatus>("INIT");
   const [secondsCount, setSecondsCount] = useState(0);
-  const [timeLastTick, setTimeLastTick] = useState<null | number>(null);
+  const [timeLastTick, setTimeLastTick] = useState<number>(initialTickTime);
 
   useEffect(() => {
     const tickInterval = setInterval(() => {
       if (timerStatus === "RUNNING") {
         const timeNow = Date.now();
-        if (!timeLastTick) {
-          setTimeLastTick(timeNow);
-          return;
-        }
         const difference = timeNow - timeLastTick;
         if (difference > 1000) {
           const drift = difference - 1000;
@@ -23,6 +21,7 @@ export function useTimer() {
         }
       }
     }, 5);
+
     return () => {
       clearInterval(tickInterval);
     };
