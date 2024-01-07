@@ -4,10 +4,6 @@ import { useTimer } from "./useTimer";
 
 vi.useFakeTimers();
 
-// beforeEach(() => {
-//   // tell vitest we use mocked time
-// });
-
 describe("useTimer hook", () => {
   test("timer initializes successfully", () => {
     const { result } = renderHook(() => useTimer());
@@ -50,7 +46,7 @@ describe("useTimer hook", () => {
     expect(result.current.timerStatus).toBe("RUNNING");
 
     act(() => {
-      vi.advanceTimersByTime(1005); // Advance by 5 milliseconds
+      vi.advanceTimersByTime(1005);
     });
 
     expect(result.current.secondsCount).toBe(1);
