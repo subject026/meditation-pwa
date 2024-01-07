@@ -60,5 +60,13 @@ describe("useTimer hook", () => {
     });
 
     expect(result.current.secondsCount).toBe(2);
+
+    for (let i = 0; i < 10; i++) {
+      act(() => {
+        vi.advanceTimersByTime(1005);
+      });
+    }
+
+    expect(result.current.secondsCount).toBe(12);
   });
 });
