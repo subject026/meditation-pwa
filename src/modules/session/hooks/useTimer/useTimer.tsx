@@ -8,15 +8,16 @@ export function useTimer() {
   const [timeLastTick, setTimeLastTick] = useState<null | number>(null);
 
   useEffect(() => {
-    setTimeLastTick(Date.now());
     const tickInterval = setInterval(() => {
       if (timerStatus === "RUNNING") {
         const timeNow = Date.now();
         if (!timeLastTick) throw new Error("timeLastTick not set!");
         const difference = timeNow - timeLastTick;
-        if (difference > 1000) {
+        if (difference >= 1000) {
           const drift = difference - 1000;
-          setSecondsCount(secondsCount + 1);
+          setSecondsCount((secondsCount) => {
+            return secondsCount + 1;
+          });
           setTimeLastTick(timeNow - drift);
         }
       }
@@ -34,6 +35,7 @@ export function useTimer() {
   ]);
 
   function startTimer() {
+    setTimeLastTick(Date.now());
     setTimerStatus("RUNNING");
   }
 
