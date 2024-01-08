@@ -12,6 +12,7 @@ import { Index } from "@/routes/index.tsx";
 import { Session } from "@/routes/session.tsx";
 
 import "./index.css";
+import { PWATesting } from "./routes/pwa-testing";
 
 const rootRoute = new RootRoute({
   component: () => <Outlet />,
@@ -29,7 +30,17 @@ const sessionRoute = new Route({
   component: () => <Session />,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, sessionRoute]);
+const pwaTestingRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/pwa-testing",
+  component: () => <PWATesting />,
+});
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  sessionRoute,
+  pwaTestingRoute,
+]);
 
 const router = new Router({ routeTree });
 
