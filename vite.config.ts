@@ -6,14 +6,13 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   plugins: [
     react(),
-    // mkcert(),
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "CalmCache",
-        short_name: "CalmCache",
-        description: "Track your meditation practice",
+        name: "HabitCache",
+        short_name: "HabitCache",
+        description: "Track your things and such",
         theme_color: "#38a9ff",
         display: "fullscreen",
         start_url: "/?fullscreen=true",

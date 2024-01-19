@@ -1,4 +1,4 @@
-import { Layout } from "@/modules/core/componnents/Layout/Layout";
+import { Layout } from "@/modules/core/components/Layout/Layout";
 import { Link } from "@tanstack/react-router";
 
 export function Index() {

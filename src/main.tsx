@@ -10,9 +10,12 @@ import {
 
 import { Index } from "@/routes/index.tsx";
 import { Session } from "@/routes/session.tsx";
+import { PWATesting } from "@/routes/pwa-testing";
+import { Focus } from "@/routes/focus";
+
+import { SessionProvider } from "@/modules/session/context/TimerContext/SessionContext";
 
 import "./index.css";
-import { PWATesting } from "./routes/pwa-testing";
 
 const rootRoute = new RootRoute({
   component: () => <Outlet />,
@@ -22,6 +25,12 @@ const indexRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/",
   component: () => <Index />,
+});
+
+const focusRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/focus",
+  component: () => <Focus />,
 });
 
 const sessionRoute = new Route({
@@ -38,6 +47,7 @@ const pwaTestingRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  focusRoute,
   sessionRoute,
   pwaTestingRoute,
 ]);
@@ -52,6 +62,8 @@ declare module "@tanstack/react-router" {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>
   </React.StrictMode>
 );

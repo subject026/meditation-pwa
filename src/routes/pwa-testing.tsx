@@ -1,5 +1,6 @@
-import { Button } from "@/modules/core/componnents/Layout/Button";
-import { Layout } from "@/modules/core/componnents/Layout/Layout";
+import { Button } from "@/modules/core/components/Layout/Button";
+import { Layout } from "@/modules/core/components/Layout/Layout";
+import { useState } from "react";
 
 function testNotification() {
   const options = {
@@ -20,11 +21,14 @@ function permissionGranted() {
 }
 
 export function PWATesting() {
+  const [thing, setThing] = useState("init");
+
   return (
     <Layout>
       <Button
-        onClick={() => {
+        onPress={() => {
           Notification.requestPermission().then((result) => {
+            setThing("requested permission");
             if (result === "granted") {
               permissionGranted();
             }
@@ -33,6 +37,7 @@ export function PWATesting() {
       >
         request permissions
       </Button>
+      <div className="py-12 px-8">state: {thing}</div>
     </Layout>
   );
 }

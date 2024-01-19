@@ -9,7 +9,7 @@ describe("useTimer hook", () => {
     const { result } = renderHook(() => useTimer());
 
     expect(result.current.timerStatus).toBe("INIT");
-    expect(result.current.secondsCount).toBe(0);
+    expect(result.current.secondsPassed).toBe(0);
   });
 
   test("can start timer", () => {
@@ -50,7 +50,7 @@ describe("useTimer hook", () => {
       });
     }
 
-    expect(result.current.secondsCount).toBe(1);
+    expect(result.current.secondsPassed).toBe(1);
 
     // 4005ms later
     for (let i = 0; i < 200 * 4 + 5; i++) {
@@ -59,7 +59,7 @@ describe("useTimer hook", () => {
       });
     }
 
-    expect(result.current.secondsCount).toBe(5);
+    expect(result.current.secondsPassed).toBe(5);
 
     // 1_0005ms later
     for (let i = 0; i < 200 * 10 + 5; i++) {
@@ -68,7 +68,7 @@ describe("useTimer hook", () => {
       });
     }
 
-    expect(result.current.secondsCount).toBe(15);
+    expect(result.current.secondsPassed).toBe(15);
   });
 
   test("can reset timer", () => {
@@ -85,13 +85,13 @@ describe("useTimer hook", () => {
       });
     }
 
-    expect(result.current.secondsCount).toBe(10);
+    expect(result.current.secondsPassed).toBe(10);
 
     act(() => {
       result.current.resetTimer();
     });
 
     expect(result.current.timerStatus).toBe("INIT");
-    expect(result.current.secondsCount).toBe(0);
+    expect(result.current.secondsPassed).toBe(0);
   });
 });

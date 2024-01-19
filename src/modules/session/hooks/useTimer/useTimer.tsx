@@ -4,7 +4,7 @@ export type TTimerStatus = "INIT" | "RUNNING" | "STOPPED";
 
 export function useTimer() {
   const [timerStatus, setTimerStatus] = useState<TTimerStatus>("INIT");
-  const [secondsCount, setSecondsCount] = useState(0);
+  const [secondsPassed, setSecondsPassed] = useState(0);
   const [timeLastTick, setTimeLastTick] = useState<null | number>(null);
 
   useEffect(() => {
@@ -15,8 +15,8 @@ export function useTimer() {
         const difference = timeNow - timeLastTick;
         if (difference >= 1000) {
           const drift = difference - 1000;
-          setSecondsCount((secondsCount) => {
-            return secondsCount + 1;
+          setSecondsPassed((secondsPassed) => {
+            return secondsPassed + 1;
           });
           setTimeLastTick(timeNow - drift);
         }
@@ -30,8 +30,8 @@ export function useTimer() {
     timerStatus,
     timeLastTick,
     setTimeLastTick,
-    secondsCount,
-    setSecondsCount,
+    secondsPassed,
+    setSecondsPassed,
   ]);
 
   function startTimer() {
@@ -46,13 +46,13 @@ export function useTimer() {
 
   function resetTimer() {
     setTimeLastTick(null);
-    setSecondsCount(0);
+    setSecondsPassed(0);
     setTimerStatus("INIT");
   }
 
   return {
     timerStatus,
-    secondsCount,
+    secondsPassed,
     startTimer,
     stopTimer,
     resetTimer,
