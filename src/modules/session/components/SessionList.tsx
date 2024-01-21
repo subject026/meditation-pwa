@@ -1,7 +1,8 @@
 import { db } from "@/modules/db/db";
 import { useLiveQuery } from "dexie-react-hooks";
-import { differenceInMinutes, differenceInSeconds } from "date-fns";
 import { Button } from "@/modules/core/components/Layout/Button";
+import { parseTime } from "../utils/parseTime/parseTime";
+import { addLeadingZero } from "../utils/addLeadingZero";
 
 export function SessionList() {
   const sessions = useLiveQuery(() => db.session.toArray());
@@ -18,34 +19,39 @@ export function SessionList() {
         <Button onPress={() => db.session.clear()}>clear</Button>
       </div>
       <ul className="flex flex-col gap-2">
-        {sessions?.map((session) => (
-          <li key={session.id} className="p-2 rounded bg-neutral-300">
-            <span>
-              {differenceInMinutes(session.endTime, session.startTime)}:
-              {differenceInSeconds(session.endTime, session.startTime) % 60}
-            </span>
-          </li>
-        ))}
+        {sessions?.map((session) => {
+          const { hours, minutes, seconds } = parseTime(session.length);
+          return (
+            <li
+              key={session.id}
+              className="p-2 rounded bg-neutral-300 flex justify-end"
+            >
+              <span>
+                {hours > 0 && hours + ":"}
+                {addLeadingZero(minutes)}:{addLeadingZero(seconds)}
+              </span>
+            </li>
+          );
+        })}
       </ul>
-      <TotalTime seconds={totalSeconds || 0} />
+      <TotalTime totalSeconds={totalSeconds || 0} />
     </div>
   );
 }
 
-function addLeadingZero(num: number) {
-  return num < 10 ? `0${num}` : num.toString();
-}
-
-function TotalTime({ seconds }: { seconds: number }) {
-  const hours = Math.floor(seconds / 360);
-  const minutes = Math.floor(seconds / 60);
+function TotalTime({ totalSeconds }: { totalSeconds: number }) {
+  const { hours, minutes, seconds } = parseTime(totalSeconds);
   return (
     <div className="pt-6">
-      <div className="flex justify-between">
+      <div className="flex justify-between p-2">
         <span className="font-bold text-lg">total time</span>
         <span>
-          {addLeadingZero(hours)}:{addLeadingZero(minutes)}
+          {hours > 0 && hours + ":"}
+          {addLeadingZero(minutes)}:{addLeadingZero(seconds)}
         </span>
+      </div>
+      <div className="text-sm italic text-neutral-500 flex justify-end">
+        <span>{`${hours} hours ` + `${minutes} minutes`}</span>
       </div>
     </div>
   );

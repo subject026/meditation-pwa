@@ -33,6 +33,7 @@ const SessionContext = createContext<
         startTime: Date;
       }) => void;
       saveSession: () => void;
+      resetSession: () => void;
       sessionState: SessionState;
     }
   | undefined
@@ -72,6 +73,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }));
   }, [secondsPassed, timerStatus]);
 
+  function resetSession() {
+    setSessionState(initialState);
+    stopTimer();
+    resetTimer();
+  }
+
   function saveSession() {
     if (sessionState.status === "INIT") {
       throw new Error('can\'t save session with status "INIT"');
@@ -84,9 +91,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       endTime,
       length: differenceInSeconds(endTime, sessionState.startTime),
     });
-    setSessionState(initialState);
-    stopTimer();
-    resetTimer();
+    resetSession();
   }
 
   return (
@@ -94,6 +99,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       value={{
         startSession,
         saveSession,
+        resetSession,
         sessionState,
       }}
     >

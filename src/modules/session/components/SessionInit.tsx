@@ -16,34 +16,30 @@ export function SessionInit() {
       })
       .catch((err) => console.log(err));
   }
-  return (
-    <section className="grow flex flex-col gap-4 items-center">
-      {settings && (
-        <>
-          <NumberField
-            defaultValue={settings.focusSessionMinutes}
-            minValue={0}
-            onChange={handleSessionTargetChange}
-            className="flex flex-col gap-4"
-          >
-            <Label>Duration</Label>
-            <Group className="flex gap-2">
-              <Input className="p-2 border-2 border-neutral-400 rounded max-w-52 text-3xl font-bold bg-transparent" />
-            </Group>
-          </NumberField>
+  return settings ? (
+    <div className="max-w-96 flex flex-col gap-4">
+      <NumberField
+        value={settings.focusSessionMinutes}
+        minValue={0}
+        onChange={handleSessionTargetChange}
+        className="flex flex-col gap-4"
+      >
+        <Label>Duration</Label>
+        <Group className="flex gap-2">
+          <Input className="p-2 border-2 border-neutral-400 rounded max-w-52 text-3xl font-bold bg-transparent" />
+        </Group>
+      </NumberField>
 
-          <Button
-            onPress={() => {
-              startSession({
-                targetMinutes: settings.focusSessionMinutes,
-                startTime: new Date(),
-              });
-            }}
-          >
-            start timer
-          </Button>
-        </>
-      )}
-    </section>
-  );
+      <Button
+        onPress={() => {
+          startSession({
+            targetMinutes: settings.focusSessionMinutes,
+            startTime: new Date(),
+          });
+        }}
+      >
+        start timer
+      </Button>
+    </div>
+  ) : null;
 }

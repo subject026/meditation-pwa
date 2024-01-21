@@ -11,19 +11,21 @@ export function Focus() {
     <Layout>
       <div className="flex p-4 gap-4">
         <SessionList />
-        {(() => {
-          switch (sessionState.status) {
-            case "INIT":
-              return <SessionInit />;
-            case "RUNNING":
-              return (
-                <SessionRunning
-                  secondsPassed={sessionState.secondsPassed}
-                  targetSeconds={sessionState.targetSeconds}
-                />
-              );
-          }
-        })()}
+        <section className="grow flex flex-col gap-4 items-center">
+          {(() => {
+            switch (sessionState.status) {
+              case "INIT":
+                return <SessionInit />;
+              case "RUNNING":
+                return (
+                  <SessionRunning
+                    secondsPassed={sessionState.secondsPassed}
+                    targetSeconds={sessionState.targetSeconds}
+                  />
+                );
+            }
+          })()}
+        </section>
       </div>
     </Layout>
   );
