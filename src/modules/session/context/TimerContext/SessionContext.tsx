@@ -9,6 +9,7 @@ import { useTimer } from "../../hooks/useTimer/useTimer";
 import { nanoid } from "nanoid";
 import { db } from "@/modules/db/db";
 import { differenceInSeconds } from "date-fns";
+import { dispatchNotification } from "@/util";
 
 export type SessionInitState = {
   status: "INIT";
@@ -19,6 +20,7 @@ export type SessionRunningState = {
   startTime: Date;
   targetSeconds: number;
   secondsPassed: number;
+  targetReached: boolean;
 };
 
 export type SessionState = SessionInitState | SessionRunningState;
@@ -59,18 +61,37 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     setSessionState({
       status: "RUNNING",
       startTime,
-      targetSeconds: targetMinutes * 60,
       secondsPassed: secondsPassed,
+      targetSeconds: targetMinutes * 60,
+      targetReached: false,
     });
     startTimer();
   }
 
+  // TICK TOCK TICK TOCK
   useEffect(() => {
     if (timerStatus !== "RUNNING") return;
-    setSessionState((state) => ({
-      ...state,
-      secondsPassed,
-    }));
+    setSessionState((state) => {
+      if (
+        state.status === "RUNNING" &&
+        state.targetReached === false &&
+        secondsPassed >= state.targetSeconds
+      ) {
+        dispatchNotification({
+          title: "Session Target Reached!",
+          body: "such wow",
+        });
+        return {
+          ...state,
+          secondsPassed,
+          targetReached: true,
+        };
+      }
+      return {
+        ...state,
+        secondsPassed,
+      };
+    });
   }, [secondsPassed, timerStatus]);
 
   function resetSession() {

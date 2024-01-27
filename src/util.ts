@@ -1,3 +1,13 @@
-export function adder(a: number, b: number): number {
-  return a + b;
+export function dispatchNotification({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
+  const options = {
+    icon: "/android-chrome-192x192.png",
+    body,
+  };
+  new Notification(title, options);
 }
